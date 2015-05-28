@@ -4,7 +4,7 @@
 #author : phantomer
 
 import string
-
+import sys,urllib,urllib2,re
 print "本程序用来简易的转换22位MD5到规范的MD5\n"
 
 
@@ -48,3 +48,128 @@ for i in range(16):
     strings2+=a
 
 print "生成的32位md5：",strings2
+
+jiemi=raw_input( "是否需要在线解密？：y？n？")
+def jiemionlie():
+	MD5=strings2
+	def myaddr():
+		site = 'http://md5.my-addr.com/'
+		rest = 'md5_decrypt-md5_cracker_online/md5_decoder_tool.php'
+		para = urllib.urlencode({'md5':MD5})
+		req = urllib2.Request(site+rest)
+		fd = urllib2.urlopen(req, para)
+		data = fd.read()
+		match = re.search('(Hashed string</span>: )(\w+.\w+)', data)
+		if match: print '[-] site: %s\t\t\tPassword: %s' %(site, match.group(2))
+		else: print '[-] site: %s\t\t\tPassword: Not found\n' %site
+	myaddr()
+
+	def victorov():
+		try:
+			site = 'http://www.victorov.su/'
+			para = 'md5/?md5e=&md5d=%s' %MD5
+			req = urllib2.Request(site+para)
+			req.add_header
+			opener = urllib2.urlopen(req)
+			data = opener.read()
+			match = re.search('(\w+)(</b>)', data)
+			if match: print '\n[-] site: %s\t\t\tPassword: %s\n' %(site, match.group(1))
+			else: print '[-] site: %s\t\t\tPassword: Not found\n' %site
+		except urllib2.URLError,e: print '[+] site: %s \t\t\t seems to be down\n' %site
+	victorov()
+
+'''	def md5crack():
+		site = 'http://www.md5crack.com/'
+		rest = 'crackmd5.php'
+		para = urllib.urlencode({'term':MD5})
+		req = urllib2.Request(site+rest)
+		try:
+			fd = urllib2.urlopen(req, para)
+			data = fd.read()
+			match = re.search('(Found: md5)(..)(\w+.\w+)', data)
+			if match: print '[-] site: %s\t\t\tPassword: %s\n' %(site, match.group(3))
+			else: print '[-] site: %s\t\t\tPassword: Not found\n' %site
+		except urllib2.HTTPError: print '[*] Check your connection\n'
+	md5crack()
+'''
+'''	def rednoize():
+		site = 'http://md5.rednoize.com/'
+		para = 'p&s=md5&q=%s&_=' %MD5
+		req = urllib2.urlopen(site+'?'+para)
+		data = req.read()
+		if not len(data): print '[-] site: %s\t\t\tPassword: Not found\n' %site
+		else: print '[-] site: %s\t\t\tPassword: %s\n' %(site, data)
+	rednoize()
+
+	def md5pass():
+		site = 'http://www.md5pass.info/'
+		para = urllib.urlencode({'hash':MD5, 'get_pass':'Get+Pass'})
+		req = urllib2.Request(site)
+		fd = urllib2.urlopen(req, para)
+		data = fd.read()
+		match = re.search('(Password - <b>)(\w+)', data)
+		if match: print '[-] site: %s\t\t\tPassword: %s\n' %(site, match.group(2))
+		else: print '[-] site: %s\t\t\tPassword: Not found\n' %site
+	md5pass()
+
+	def md5decryption():
+		site = 'http://md5decryption.com/'
+		para = urllib.urlencode({'hash':MD5,'submit':'Decrypt+It!'})
+		req = urllib2.Request(site)
+		fd = urllib2.urlopen(req, para)
+		data = fd.read()
+		match = re.search(r'(Decrypted Text: </b>)(.+[^>])(</font><br/><center>)', data)
+		if match: print '[-] site: %s\t\t\tPassword: %s\n' %(site, match.group(2))
+		else: print '[-] site: %s\t\t\tPassword: Not found\n' %site
+	md5decryption()
+
+
+	def bigtrapeze():
+		site = 'http://www.bigtrapeze.com/'
+		rest = 'md5/index.php?query=%s' %MD5
+		req = urllib2.Request(site+rest)
+		req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.2)\
+		Gecko/20100316 AskTbSPC2/3.9.1.14019 Firefox/3.6.2')
+		opener = urllib2.build_opener()
+		data = opener.open(req).read()
+		match = re.search('(=> <strong>)(\w+.\w+)', data)
+		if match: print '[-] site: %s\t\t\tPassword: %s\n' %(site, match.group(2))
+		else: print '[-] site: %s\t\t\tPassword: Not found\n' %site
+	bigtrapeze()
+
+	def cloudcracker():
+		site = 'http://www.netmd5crack.com/'
+		para = 'cgi-bin/Crack.py?InputHash=%s' %MD5
+		req = urllib.urlopen(site+para)
+		data = req.read()
+		match = re.search(r'<tr><td class="border">[^<]+</td><td class="border">\(?P<hash>[^>]+)</td></tr></tbody></table>', data)
+		if match: print '[-] site: %s\t\t\tPassword: %s\n' %(site, match.group(hash))
+		else: print '[-] site: %s\t\t\tPassword: Not found\n' %site
+	cloudcracker()
+
+	def hashchecker():
+		site = 'http://www.hashchecker.com/'
+		para = urllib.urlencode({'search_field':MD5, 'Submit':'search'})
+		req = urllib2.Request(site)
+		fd = urllib2.urlopen(req, para)
+		data = fd.read()
+		match = re.search('(is <b>)(\w+)', data)
+		if match: print '[-] site: %s\t\t\tPassword: %s\n' %(site, match.group(2))
+		else: print '[-] site: %s\t\t\tPassword: Not found\n' %site
+	hashchecker()
+
+	def hashcracking():
+		site = 'http://md5.hashcracking.com/'
+		rest = 'search.php'
+		para = 'md5=%s' %MD5
+		req = urllib2.urlopen(site+rest+'?'+para)
+		data = req.read()
+		match = re.search('(is)(.)(\w+.\w+)', data)
+		if match: print '[-] site: %s\t\t\tPassword: %s\n' %(site, match.group(3))
+		else: print '[-] site: %s\t\t\tPassword: Not found\n' %site
+	hashcracking()
+'''
+if jiemi=='y':
+    jiemionlie()
+else:
+    sys.exit()
