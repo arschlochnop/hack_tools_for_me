@@ -9,6 +9,15 @@ print "本程序用来简易的转换22位MD5到规范的MD5\n"
 
 
 name=raw_input("请输入22位MD5：")
+if len(name)!=22:
+    while(1):
+        if name[-1]=="=":
+            name[:-1]
+        else:
+            break
+if len(name)!=22:
+    print "输入的md5不符合要求"
+
 
 table1={
     'A':'0','B':'1','C':'2','D':'3','E':'4','F':'5','G':'6','H':'7','I':'8','J':'9','K':'10','L':'11','M':'12','N':'13','O':'14','P':'15','Q':'16','R':'17','S':'18','T':'19','U':'20','V':'21','W':'22','X':'23','Y':'24','Z':'25'
@@ -48,10 +57,11 @@ for i in range(16):
     strings2+=a
 
 print "生成的32位md5：",strings2
+print "生成的32位md5（全小写）：",strings2.lower()
 
 jiemi=raw_input( "是否需要在线解密？：y？n？")
 def jiemionlie():
-	MD5=strings2
+	MD5=strings2.lower()
 	def myaddr():
 		site = 'http://md5.my-addr.com/'
 		rest = 'md5_decrypt-md5_cracker_online/md5_decoder_tool.php'
