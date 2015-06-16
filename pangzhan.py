@@ -9,7 +9,7 @@ url="http://s.tool.chinaz.com/same"
 url2=raw_input("要输入的站:")
 def gethtml(url):
     data={
-        "s":"glltjx.com"
+        "s":url2
     }
     f=urllib2.urlopen(url,urllib.urlencode(data))
     html=f.read()
@@ -17,6 +17,7 @@ def gethtml(url):
 
 def getpangzhan(html):
     reg=re.compile(ur'[1-9]\d*.</span>.+[0-9a-zA-Z].')
+    #reg2=re.compile
     pangzhanre=re.compile(reg)
     pangzhanlist=re.findall(pangzhanre,html)
     return pangzhanlist
