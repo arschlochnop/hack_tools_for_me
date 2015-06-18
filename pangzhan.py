@@ -26,6 +26,8 @@ html=gethtml(url)
 list=getpangzhan(html)
 print list
 
-#def zhengli(list):
-#    for x in list:
+fo=open("output.txt","wb")
 
+fo.writelines(list)
+
+fo.close()
