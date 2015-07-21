@@ -12,3 +12,8 @@ a="请求方式：\n 1.get \n 2.post"
 print a
 
 b=raw_input()
+
+if b==1:
+    xx()
+elif b==2:
+    xx1()
